@@ -27,7 +27,7 @@ public class TFRT {
 
         Scanner myReader;
         try {
-            File myFile = new File("result.txt");
+            File myFile = new File("testfile.txt");
             myReader = new Scanner(myFile);
 
             // reading lines from text file, inserting them into the stack
@@ -60,14 +60,14 @@ public class TFRT {
     public static void resultantFile(ArrayList<String> lines){
 
         // creating the new file with the TFRT result
-        File resultFile = new File("newresult.txt");
+        File resultFile = new File("result.txt");
 
         try {   
             if (resultFile.createNewFile()) {
                 System.out.println("File created: " + resultFile.getName());
                 
                 // writing the reversed lines to the created result.txt file
-                myWriter = new FileWriter("newresult.txt");
+                myWriter = new FileWriter(resultFile);
                 for (String line : lines){
                     myWriter.write(line + "\n");
                 }
@@ -83,29 +83,6 @@ public class TFRT {
         }
         // return resultFile;
     }
-
-    // method to traverse a word and pushing the characters to a stack
-    public static void traverseWord(String str){
-        // traversing the string
-        for (int i = 0; i < str.length(); i++) {
-            // pushing current character to the stack
-            characters.push(str.charAt(i));
-        }
-    }
-
-    // method to traverse a line and pushing the words to a stack
-    public static void traverseSentence(String str){
-        // splitting the sentence into words using space as a delimiter
-        String[] wordsInSentence = str.split(" ");
-        // traversing the words and pushing them to the words stack
-        for(String word : wordsInSentence){
-            // pushing current word to the stack
-            words.push(word);
-        }
-    }
-
-
-
 
     // method for reversing a single word
     public static String reverseWord(String str){
@@ -140,12 +117,3 @@ public class TFRT {
         return reversedSentence;
     }
 }
-
-
-
-       // Creating an iterator for the lines stack
-    //    Iterator<String> iter = lines.iterator();
-
-    //    while(iter.hasNext()){
-    //         System.out.println(iter.next());
-    //    }
