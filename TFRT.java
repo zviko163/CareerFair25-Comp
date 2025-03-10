@@ -1,3 +1,16 @@
+/**
+ * Ashesi University Programming Challenge Career Fair 2025
+ * Triple File Reversal Transformation ( TFRT)
+ *
+ * The program reads a text file, reverses the lines, words and
+ * characters in the file and writes the result to a new file.
+ * It takes two command line arguments, the input file and the output file names
+ * The program uses three stacks to store the extracted lines, words and characters
+ * Stacks because of their LIFO (Last In First Out) nature, useful in reversing
+ *
+ * @author SHAMMAH Z. DZWAIRO
+ * Date: 10th March, 2025
+ */
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,9 +38,18 @@ public class TFRT {
         // arraylist to store the reversed lines before writing them to a file
         ArrayList<String> reversedLines = new ArrayList<String>();
 
+        // getting the input and output files from the users's command line arguments
+        String inputFile = args[0];
+        String outputFile = args[1];
+
+        // scanner object to read from a file
         Scanner myReader;
+
+        // counter to keep track of the number of lines in the text file
+        // int lineCounter = 0;
+        
         try {
-            File myFile = new File("testfile.txt");
+            File myFile = new File(inputFile);
             myReader = new Scanner(myFile);
 
             // reading lines from text file, inserting them into the stack
@@ -53,23 +75,36 @@ public class TFRT {
         }
 
         // creating the new file with the TFRT result
-        resultantFile(reversedLines);
+        resultantFile(reversedLines, outputFile);
     }
 
-    // method to provide resultant File
-    public static void resultantFile(ArrayList<String> lines){
+    // **************************************************
+    // HELPER METHODS
+    // **************************************************
+
+    /**
+     * method to write to the resultant File
+     * @param lines an ArrayList with the reversed lines
+     * @param outputFileName the name of the output file
+     */
+
+    public static void resultantFile(ArrayList<String> lines, String outputFileName){
+
+        // keeping track of the original line numbers in the text file
+        int lineCounter = lines.size();
 
         // creating the new file with the TFRT result
-        File resultFile = new File("result.txt");
+        File resultFile = new File(outputFileName);
 
-        try {   
+        try {
             if (resultFile.createNewFile()) {
                 System.out.println("File created: " + resultFile.getName());
                 
                 // writing the reversed lines to the created result.txt file
                 myWriter = new FileWriter(resultFile);
                 for (String line : lines){
-                    myWriter.write(line + "\n");
+                    myWriter.write(lineCounter + ". " + line + "\n");
+                    lineCounter--;
                 }
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
@@ -81,10 +116,14 @@ public class TFRT {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        // return resultFile;
     }
 
-    // method for reversing a single word
+    /**
+     * method for reversing a single word
+     * @param str the string to be reversed
+     * @return the reversed string
+     */
+
     public static String reverseWord(String str){
         String reversedWord = "";
 
@@ -96,17 +135,21 @@ public class TFRT {
         return reversedWord;
     }
     
-    // method for reversing a single sentence
+    /**
+     * method for reversing a single sentence
+     * @param str the sentence to be reversed
+     * @return the reversed sentence
+     */
+
     public static String reverseSentence(String str){
-        String reversedSentence = "";    
+        String reversedSentence = "";
+
         // splitting the sentence into words using space as a delimiter
         String[] wordsInSentence = str.split(" ");
 
         // traversing the words and pushing them to the words stack
         for(String word : wordsInSentence){
-            // pushing current word to the stack
-            words.push(word);
-            System.out.println(word);
+            words.push(word);                     // pushing current word to the stack
         }
     
         for(int i = 0; i < wordsInSentence.length; i++){
